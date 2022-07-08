@@ -10,7 +10,7 @@ resource "cloudflare_argo_tunnel" "bootstrap" {
 
 resource "cloudflare_record" "tunnel" {
   zone_id = var.cloudflare_zone_id
-  name    = "gke-tunnel-origin.${var.domain_name}"
+  name    = "tunnel-origin.${var.domain_name}"
   value   = "${cloudflare_argo_tunnel.bootstrap.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = false

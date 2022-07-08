@@ -15,3 +15,9 @@ provider "helm" {
 
 provider "random" {
 }
+provider "kubectl" {
+  config_path = "./bootstrap.kubeconfig"
+}
+
+provider "http" {
+}

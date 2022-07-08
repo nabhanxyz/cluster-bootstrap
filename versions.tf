@@ -18,6 +18,14 @@ terraform {
       version = ">= 3.3.2"
     }
 
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = "1.14.0"
+    }
+
+    http = {
+      source  = "hashicorp/http"
+      version = "2.2.0"
+    }
   }
 }
-

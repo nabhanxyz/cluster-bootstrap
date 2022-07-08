@@ -44,7 +44,7 @@ resource "kubernetes_deployment" "cloudflared" {
         }
 
         container {
-          image = "cloudflare/cloudflared:2021.5.10"
+          image = "cloudflare/cloudflared:2021.7.1"
           name  = "cloudflared"
           args  = ["tunnel", "--config", "/etc/cloudflared/config/config.yaml", "run"]
 
@@ -98,6 +98,8 @@ no-autoupdate: true
 # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
 #
 ingress:
+- hostname: argocd.${var.domain_name}
+  service: http://argocd-server:80
 # This rule sends all requests to nginx ingress controller, which proxies them further to correct services
 - service: http://${helm_release.nginx_ingress.name}.${kubernetes_namespace.nginx_ingress.metadata[0].name}.svc.cluster.local.:80
 EOT
