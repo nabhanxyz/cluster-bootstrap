@@ -15,3 +15,11 @@ resource "cloudflare_record" "tunnel" {
   type    = "CNAME"
   proxied = false
 }
+
+resource "cloudflare_record" "wildcard" {
+  zone_id = var.cloudflare_zone_id
+  name    = "*"
+  value   = "${cloudflare_argo_tunnel.bootstrap.id}.cfargotunnel.com"
+  type    = "CNAME"
+  proxied = true
+}

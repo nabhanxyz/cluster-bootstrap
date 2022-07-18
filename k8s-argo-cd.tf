@@ -25,5 +25,46 @@ resource "cloudflare_record" "argocd" {
   name    = "argocd.${var.domain_name}"
   value   = "${cloudflare_argo_tunnel.bootstrap.id}.cfargotunnel.com"
   type    = "CNAME"
-  proxied = false
+  proxied = true
+}
+
+resource "kubernetes_ingress_v1" "argocd" {
+  metadata {
+    name      = "argocd"
+    namespace = "argocd"
+    annotations = {
+      "ingress.kubernetes.io/rewrite-target" = "/"
+      "nginx.ingress.kubernetes.io/force-ssl-redirect" = "false"
+      "nginx.ingress.kubernetes.io/backend-protocol" = "HTTP"
+    }
+  }
+  spec {
+    default_backend {
+      service {
+        name = "argocd-server"
+        port {
+          number = 80
+        }
+      }
+    }
+    ingress_class_name = "nginx"
+
+    rule {
+      host = "argocd.${var.domain_name}"
+      http {
+        path {
+          backend {
+            service {
+              name = "argocd-server"
+              port {
+                number = 80
+              }
+            }
+          }
+
+          path = "/(.*)"
+        }
+      }
+    }
+  }
 }

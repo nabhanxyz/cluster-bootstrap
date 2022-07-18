@@ -1,0 +1,50 @@
+resource "kubernetes_namespace" "traefik_ingress" {
+  metadata {
+    name        = "traefik-ingress"
+    annotations = {}
+    labels      = {}
+  }
+}
+
+resource "helm_release" "traefik_ingress" {
+  name = "traefik-ingress-controller"
+
+  repository = "https://helm.traefik.io/traefik"
+  chart      = "traefik"
+
+  namespace = kubernetes_namespace.traefik_ingress.metadata[0].name
+
+  # set {
+  #   name  = "service.type"
+  #   value = "LoadBalancer"
+  # }
+
+  # set {
+  #   name  = "ingressClass.enabled"
+  #   value = "true"
+  # }
+
+  # set {
+  #   name  = "ingressClass.isDefaultClass"
+  #   value = "true"
+  # }
+
+  # set {
+  #   name  = "ingressClassResource.name"
+  #   value = "traefik"
+  # }
+  # set {
+  #   name  = "ingressClassResource.enabled"
+  #   value = "true"
+  # }
+  # set {
+  #   name  = "ingressClassResource.default"
+  #   value = "true"
+  # }
+
+  # set {
+  #   name  = "ingressClassResource.enabled"
+  #   value = "true"
+  # }
+
+}

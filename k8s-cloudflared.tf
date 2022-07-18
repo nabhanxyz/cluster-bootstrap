@@ -98,10 +98,15 @@ no-autoupdate: true
 # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
 #
 ingress:
-- hostname: argocd.${var.domain_name}
-  service: http://argocd-server:80
+# - hostname: argocd.${var.domain_name}
+#   service: http://argocd-server:80
+# - hostname: git.${var.domain_name}
+#   service: http://gitea-http:3000
 # This rule sends all requests to nginx ingress controller, which proxies them further to correct services
-- service: http://${helm_release.nginx_ingress.name}.${kubernetes_namespace.nginx_ingress.metadata[0].name}.svc.cluster.local.:80
+# - service: http://traefik.kube-system.svc.cluster.local.:80
+- service: https://nginx-ingress-controller-ingress-nginx-controller.nginx-ingress.svc.cluster.local.:443
+  originRequest:  
+    noTLSVerify: true
 EOT
   }
 }

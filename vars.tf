@@ -22,3 +22,8 @@ variable "contact_email" {
   type      = string
   sensitive = true
 }
+
+variable "enable_gitea" {
+  type      = string
+  default = "1"
+}
