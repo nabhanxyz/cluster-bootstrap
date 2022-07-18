@@ -25,5 +25,5 @@ variable "contact_email" {
 
 variable "enable_gitea" {
   type      = string
-  default = "1"
+  default = "0"
 }

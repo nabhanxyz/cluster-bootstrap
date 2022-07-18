@@ -33,9 +33,10 @@ resource "kubernetes_ingress_v1" "argocd" {
     name      = "argocd"
     namespace = "argocd"
     annotations = {
-      "ingress.kubernetes.io/rewrite-target" = "/"
-      "nginx.ingress.kubernetes.io/force-ssl-redirect" = "false"
-      "nginx.ingress.kubernetes.io/backend-protocol" = "HTTP"
+      # "ingress.kubernetes.io/rewrite-target" = "/"
+      "kubernetes.io/ingress.class" = "nginx"
+      "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
+      "nginx.ingress.kubernetes.io/backend-protocol" = "HTTPS"
     }
   }
   spec {
@@ -57,7 +58,7 @@ resource "kubernetes_ingress_v1" "argocd" {
             service {
               name = "argocd-server"
               port {
-                number = 80
+                number = 443
               }
             }
           }
