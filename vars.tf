@@ -23,7 +23,16 @@ variable "contact_email" {
   sensitive = true
 }
 
+variable "bootstrap_username" {
+  type      = string
+  sensitive = true
+}
+
+variable "bootstrap_password" {
+  type      = string
+  sensitive = true
+}
+
 variable "enable_gitea" {
   type      = string
-  default = "0"
 }

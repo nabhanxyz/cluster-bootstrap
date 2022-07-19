@@ -7,6 +7,20 @@ resource "kubernetes_namespace" "gitea" {
   }
 }
 
+resource "kubernetes_secret" "gitea_admin" {
+  metadata {
+    name = "gitea-admin-secret"
+    namespace = kubernetes_namespace.gitea[0].metadata[0].name
+  }
+
+  data = {
+    username = var.bootstrap_username
+    password = var.bootstrap_password
+  }
+
+  type = "Opaque"
+}
+
 resource "helm_release" "gitea" {
   count = var.enable_gitea
   depends_on = [
@@ -49,7 +63,16 @@ ingress:
     - hosts:
       - git.${var.domain_name}
       secretName: gitea.tls
+persistence:
+  enabled: true
+  size: 5Gi
+
+gitea:
+  admin:
+    existingSecret: ${kubernetes_secret.gitea_admin.metadata[0].name}
 
 EOF
 ]
 }
+
+
