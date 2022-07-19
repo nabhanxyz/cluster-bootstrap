@@ -1,0 +1,15 @@
+cloudflare_zone_id = "CHANGEME"
+
+cloudflare_token = "CHANGEME"
+
+cloudflare_account_id = "CHANGEME"
+
+domain_name = "changeme.com"
+
+contact_email = "change@me.com"
+
+enable_gitea = "1"
+
+bootstrap_username = "changeme"
+
+bootstrap_password = "pleasechangeme"
