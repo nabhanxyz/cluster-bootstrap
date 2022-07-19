@@ -94,13 +94,13 @@ resource "helm_release" "healthchecks" {
 
   set {
     name  = "env.SECRET_KEY"
-    value = random_string.secret_key.result
+    value = random_password.secret_key.result
   }
 
 
 }
 
-resource "random_string" "secret_key" {
+resource "random_password" "secret_key" {
   length           = 24
   special          = false
 }
