@@ -70,6 +70,10 @@ persistence:
 gitea:
   admin:
     existingSecret: ${kubernetes_secret.gitea_admin.metadata[0].name}
+  config:
+    server:
+      SSH_DOMAIN: git-ssh.${var.domain_name}
+
 
 EOF
 ]

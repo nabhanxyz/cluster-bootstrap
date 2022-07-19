@@ -104,6 +104,8 @@ ingress:
 #   service: http://gitea-http:3000
 # This rule sends all requests to nginx ingress controller, which proxies them further to correct services
 # - service: http://traefik.kube-system.svc.cluster.local.:80
+- hostname: git-ssh.${var.domain_name}
+  service: ssh://gitea-ssh.gitea.svc.cluster.local.:22
 - service: https://nginx-ingress-controller-ingress-nginx-controller.nginx-ingress.svc.cluster.local.:443
   originRequest:  
     noTLSVerify: true
