@@ -67,16 +67,6 @@ resource "helm_release" "healthchecks" {
     value = "tunnel-origin.${tostring(var.domain_name)}"
   }
 
-#   set {
-#     name  = "ingress.main.annotations.nginx\\.ingress\\.kubernetes\\.io/force-ssl-redirect"
-#     value = tostring("true")
-#   }
-
-#   set {
-#     name  = "ingress.main.annotations.nginx\\.ingress\\.kubernetes\\.io/backend-protocol"
-#     value = "HTTPS"
-#   }
-
   set {
     name  = "env.TZ"
     value = "US/Mountain"
@@ -114,12 +104,3 @@ resource "random_string" "secret_key" {
   length           = 24
   special          = false
 }
-
-# resource "cloudflare_record" "healthchecks" {
-#   zone_id = var.personal_zone_id
-#   name    = "${var.service.name}"
-#   value   = "192.168.0.30"
-#   type    = "A"
-#   ttl     = 60
-#   proxied = false
-# }
