@@ -31,7 +31,7 @@ resource "kubernetes_secret" "cf_token" {
 
 resource "null_resource" "cert_manager_crds" {
   depends_on = [
-    kubernetes_namespace.argocd,
+    kubernetes_namespace.argo_cd,
   ]
   provisioner "local-exec" {
     command = "kubectl --kubeconfig ./bootstrap.kubeconfig apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.crds.yaml"
