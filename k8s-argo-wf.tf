@@ -47,7 +47,7 @@ server:
     # issuerAlias: https://argocd.${var.domain_name}/api/dex
     # redirectUrl: https://argo-wf.${var.domain_name}/oauth2/callback
   extraArgs:
-  - --auth-mode=server
+  - --auth-mode=sso
 
 
 EOF

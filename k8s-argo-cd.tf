@@ -99,6 +99,7 @@ server:
           name: Argo Workflow
           redirectURIs:
             - https://argo-wf.${var.domain_name}/oauth2/callback
+            - https://argo-wf.${var.domain_name}/oauth2/redirect
           secretEnv: ARGO_WORKFLOWS_SSO_CLIENT_SECRET
 
 EOF
