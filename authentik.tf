@@ -62,20 +62,20 @@ env:
   AUTHENTIK_BOOTSTRAP_PASSWORD: ${var.bootstrap_password}
   AUTHENTIK_BOOTSTRAP_TOKEN: ${random_password.authentik_bootstrap_token.result}
 EOF
-]
+  ]
 }
 
 resource "random_password" "authentik_pg_password" {
-  length           = 32
-  special          = true
+  length  = 32
+  special = true
 }
 
 resource "random_password" "authentik_secret_key" {
-  length           = 50
-  special          = true
+  length  = 50
+  special = true
 }
 
 resource "random_password" "authentik_bootstrap_token" {
-  length           = 128
-  special          = false
+  length  = 128
+  special = false
 }
