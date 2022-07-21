@@ -91,9 +91,16 @@ server:
           name: Authentik
           config:
             issuer:  https://auth.${var.domain_name}/application/o/argocd/
-            clientID: ${var.argocd_client_id}
-            clientSecret: ${var.argocd_client_secret}
+            clientID: ${random_password.authentik_argocd_client_id.result}
+            clientSecret: ${random_password.authentik_argocd_client_secret.result}
             redirectURI: https://argocd.${var.domain_name}/api/dex/callback
+            getUserInfo: true
+            insecureEnableGroups: true
+            scopes: 
+              - profile
+              - email
+              - groups
+              - name
       staticClients:
         - id: argo-workflows-sso
           name: Argo Workflow

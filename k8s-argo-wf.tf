@@ -9,7 +9,9 @@ resource "kubernetes_namespace" "argo_wf" {
 resource "helm_release" "argo_wf" {
   depends_on = [
     helm_release.cert_manager,
-    helm_release.ingress_nginx
+    helm_release.ingress_nginx,
+    helm_release.argo_cd,
+    helm_release.authentik
   ]
   name = "argo-wf"
 

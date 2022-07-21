@@ -27,5 +27,10 @@ terraform {
       source  = "hashicorp/http"
       version = "2.2.0"
     }
+
+    authentik = {
+      source = "goauthentik/authentik"
+      version = "2022.7.1"
+    }
   }
 }

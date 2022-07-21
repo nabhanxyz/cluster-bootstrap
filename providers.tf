@@ -21,3 +21,8 @@ provider "kubectl" {
 
 provider "http" {
 }
+
+provider "authentik" {
+  url   = "https://auth.${var.domain_name}"
+  token = random_password.authentik_bootstrap_token.result
+}
