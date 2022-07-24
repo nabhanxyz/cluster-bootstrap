@@ -9,7 +9,7 @@ resource "kubernetes_namespace" "gitea" {
 
 resource "kubernetes_secret" "gitea_admin" {
   metadata {
-    name = "gitea-admin-secret"
+    name      = "gitea-admin-secret"
     namespace = kubernetes_namespace.gitea[0].metadata[0].name
   }
 
@@ -73,10 +73,16 @@ gitea:
   config:
     server:
       SSH_DOMAIN: git-ssh.${var.domain_name}
+  oauth: 
+    - name: 'Authentik'
+      provider: "openidConnect"
+      key: ${random_password.authentik_gitea_client_id.result}
+      secret: ${random_password.authentik_gitea_client_secret.result}
+      autoDiscoverUrl: https://auth.${var.domain_name}/application/o/gitea/.well-known/openid-configuration
 
 
 EOF
-]
+  ]
 }
 
 

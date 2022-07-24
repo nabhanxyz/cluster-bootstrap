@@ -18,7 +18,7 @@ resource "kubernetes_secret" "argo_cd_token" {
 
   data = {
     client-id = "argo-workflows-sso"
-    client-secret: random_uuid.argo_uuid.result
+    client-secret : random_uuid.argo_uuid.result
   }
 
   type = "Opaque"
@@ -36,7 +36,7 @@ resource "kubernetes_secret" "argo_wf_token" {
 
   data = {
     client-id = "argo-workflows-sso"
-    client-secret: random_uuid.argo_uuid.result
+    client-secret : random_uuid.argo_uuid.result
   }
 
   type = "Opaque"
@@ -110,7 +110,7 @@ server:
           secretEnv: ARGO_WORKFLOWS_SSO_CLIENT_SECRET
 
 EOF
-]
+  ]
 }
 
 
@@ -130,7 +130,7 @@ resource "kubernetes_ingress_v1" "argocd" {
       # "ingress.kubernetes.io/rewrite-target" = "/"
       # "kubernetes.io/ingress.class" = "nginx"
       "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
-      "nginx.ingress.kubernetes.io/backend-protocol" = "HTTPS"
+      "nginx.ingress.kubernetes.io/backend-protocol"   = "HTTPS"
     }
   }
   spec {

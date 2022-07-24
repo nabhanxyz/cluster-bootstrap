@@ -34,5 +34,5 @@ variable "bootstrap_password" {
 }
 
 variable "enable_gitea" {
-  type      = string
+  type = string
 }

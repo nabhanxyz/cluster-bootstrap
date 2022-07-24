@@ -8,7 +8,7 @@ resource "kubernetes_namespace" "healthchecks" {
 
 resource "helm_release" "healthchecks" {
   name       = "healthchecks"
-  namespace = kubernetes_namespace.healthchecks.metadata[0].name
+  namespace  = kubernetes_namespace.healthchecks.metadata[0].name
   repository = "https://k8s-at-home.com/charts/"
   chart      = "healthchecks"
 
@@ -32,7 +32,7 @@ resource "helm_release" "healthchecks" {
     name  = "ingress.main.hosts[0].host"
     value = "healthchecks.${var.domain_name}"
   }
-  
+
   set {
     name  = "ingress.main.hosts[0].paths[0].path"
     value = "/"
@@ -85,11 +85,11 @@ resource "helm_release" "healthchecks" {
   }
   set {
     name  = "env.SUPERUSER_EMAIL"
-    value = "${var.contact_email}"
+    value = var.contact_email
   }
   set {
     name  = "env.SUPERUSER_PASSWORD"
-    value = "${var.bootstrap_password}"
+    value = var.bootstrap_password
   }
 
   set {
@@ -101,6 +101,6 @@ resource "helm_release" "healthchecks" {
 }
 
 resource "random_password" "secret_key" {
-  length           = 24
-  special          = false
+  length  = 24
+  special = false
 }
