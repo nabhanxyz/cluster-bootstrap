@@ -79,3 +79,17 @@ resource "random_password" "authentik_bootstrap_token" {
   length  = 128
   special = false
 }
+
+resource "kubernetes_secret" "authentik_bootstrap" {
+  metadata {
+    name      = "authentik-bootstrap"
+    namespace = kubernetes_namespace.authentik.metadata[0].name
+  }
+
+  data = {
+    authentik_secret_key = random_password.authentik_secret_key.result
+    authentik_bootstrap_token = random_password.authentik_bootstrap_token.result
+  }
+
+  type = "Opaque"
+}
