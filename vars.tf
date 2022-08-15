@@ -1,6 +1,6 @@
-variable "cloudflare_zone_id" {
-  type      = string
-  sensitive = true
+data "cloudflare_zone" "zone_id" {
+  name = var.domain_name
+  account_id = var.cloudflare_account_id
 }
 
 variable "cloudflare_token" {

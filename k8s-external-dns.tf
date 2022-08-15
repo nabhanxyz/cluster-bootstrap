@@ -25,8 +25,8 @@ resource "helm_release" "external_dns" {
   }
 
   set {
-    name  = "zoneIdFilters.${var.cloudflare_zone_id}"
-    value = var.cloudflare_zone_id
+    name  = "zoneIdFilters.${data.cloudflare_zone.zone_id.id}"
+    value = data.cloudflare_zone.zone_id.id
   }
 
   set {
