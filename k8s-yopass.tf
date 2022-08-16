@@ -10,7 +10,7 @@ resource "kubernetes_namespace" "yopass" {
 
 resource "kubernetes_service" "yopass_memcached" {
   metadata {
-    name = "memcached"
+    name      = "memcached"
     namespace = kubernetes_namespace.yopass.metadata[0].name
 
     labels = {
@@ -39,7 +39,7 @@ resource "kubernetes_service" "yopass_memcached" {
 
 resource "kubernetes_deployment" "yopass" {
   metadata {
-    name = "yopass"
+    name      = "yopass"
     namespace = kubernetes_namespace.yopass.metadata[0].name
 
     labels = {
@@ -94,7 +94,7 @@ resource "kubernetes_deployment" "yopass" {
 
 resource "kubernetes_service" "yopass" {
   metadata {
-    name = "yopass"
+    name      = "yopass"
     namespace = kubernetes_namespace.yopass.metadata[0].name
 
     labels = {
@@ -123,7 +123,7 @@ resource "kubernetes_service" "yopass" {
 
 resource "kubernetes_deployment" "yopass_memcached" {
   metadata {
-    name = "memcached"
+    name      = "memcached"
     namespace = kubernetes_namespace.yopass.metadata[0].name
 
     labels = {
@@ -184,7 +184,7 @@ resource "kubernetes_ingress_v1" "yopass" {
       # "kubernetes.io/ingress.class" = "nginx"
       "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
       "nginx.ingress.kubernetes.io/backend-protocol"   = "HTTP"
-      "external-dns.alpha.kubernetes.io/target" = "tunnel-origin.${var.domain_name}"
+      "external-dns.alpha.kubernetes.io/target"        = "tunnel-origin.${var.domain_name}"
 
 
     }

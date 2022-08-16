@@ -87,9 +87,9 @@ resource "kubernetes_secret" "authentik_bootstrap" {
   }
 
   data = {
-    authentik_secret_key = random_password.authentik_secret_key.result
+    authentik_secret_key      = random_password.authentik_secret_key.result
     authentik_bootstrap_token = random_password.authentik_bootstrap_token.result
-    bootstrap_password = random_password.bootstrap_password.id
+    bootstrap_password        = random_password.bootstrap_password.result
   }
 
   type = "Opaque"

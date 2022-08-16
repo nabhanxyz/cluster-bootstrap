@@ -1,6 +1,6 @@
 data "kubernetes_secret" "authentik-bootstrap" {
   metadata {
-    name = "authentik-bootstrap"
+    name      = "authentik-bootstrap"
     namespace = "authentik"
   }
 }

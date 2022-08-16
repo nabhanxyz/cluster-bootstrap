@@ -23,7 +23,7 @@ resource "kubernetes_secret" "gitea_admin" {
 
 resource "helm_release" "gitea" {
   count = var.enable_gitea
-  name = "gitea"
+  name  = "gitea"
 
   repository = "https://dl.gitea.io/charts/"
   chart      = "gitea"

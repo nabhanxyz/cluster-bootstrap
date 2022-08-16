@@ -32,3 +32,5 @@ override.tf.json
 
 bootstrap.kubeconfig
 *.kubeconfig
+
+.terraform.lock.hcl
