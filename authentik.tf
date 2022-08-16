@@ -59,7 +59,7 @@ ingress:
       secretName: gitea.tls
 
 env:
-  AUTHENTIK_BOOTSTRAP_PASSWORD: ${var.bootstrap_password}
+  AUTHENTIK_BOOTSTRAP_PASSWORD: ${random_password.bootstrap_password.result}
   AUTHENTIK_BOOTSTRAP_TOKEN: ${random_password.authentik_bootstrap_token.result}
 EOF
   ]
@@ -89,6 +89,7 @@ resource "kubernetes_secret" "authentik_bootstrap" {
   data = {
     authentik_secret_key = random_password.authentik_secret_key.result
     authentik_bootstrap_token = random_password.authentik_bootstrap_token.result
+    bootstrap_password = random_password.bootstrap_password.id
   }
 
   type = "Opaque"
