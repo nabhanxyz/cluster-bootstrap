@@ -9,7 +9,7 @@ resource "cloudflare_argo_tunnel" "bootstrap" {
 }
 
 resource "cloudflare_record" "tunnel" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = data.cloudflare_zone.zone_id.id
   name    = "tunnel-origin.${var.domain_name}"
   value   = "${cloudflare_argo_tunnel.bootstrap.id}.cfargotunnel.com"
   type    = "CNAME"
@@ -17,7 +17,7 @@ resource "cloudflare_record" "tunnel" {
 }
 
 resource "cloudflare_record" "wildcard" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = data.cloudflare_zone.zone_id.id
   name    = "*"
   value   = "${cloudflare_argo_tunnel.bootstrap.id}.cfargotunnel.com"
   type    = "CNAME"

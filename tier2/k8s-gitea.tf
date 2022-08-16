@@ -15,7 +15,7 @@ resource "kubernetes_secret" "gitea_admin" {
 
   data = {
     username = var.bootstrap_username
-    password = var.bootstrap_password
+    password = data.kubernetes_secret.authentik-bootstrap.data["authentik_bootstrap_token"]
   }
 
   type = "Opaque"

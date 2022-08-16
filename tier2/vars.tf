@@ -1,8 +1,3 @@
-variable "cloudflare_zone_id" {
-  type      = string
-  sensitive = true
-}
-
 variable "cloudflare_token" {
   type      = string
   sensitive = true
@@ -24,11 +19,6 @@ variable "contact_email" {
 }
 
 variable "bootstrap_username" {
-  type      = string
-  sensitive = true
-}
-
-variable "bootstrap_password" {
   type      = string
   sensitive = true
 }

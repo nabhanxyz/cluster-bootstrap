@@ -89,7 +89,7 @@ resource "helm_release" "healthchecks" {
   }
   set {
     name  = "env.SUPERUSER_PASSWORD"
-    value = var.bootstrap_password
+    value = random_password.bootstrap_password.result
   }
 
   set {

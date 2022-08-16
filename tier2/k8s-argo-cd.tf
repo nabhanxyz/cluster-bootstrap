@@ -112,7 +112,7 @@ EOF
 
 
 resource "cloudflare_record" "argocd" {
-  zone_id = var.cloudflare_zone_id
+  zone_id = data.cloudflare_zone.zone_id.id
   name    = "argocd.${var.domain_name}"
   value   = "tunnel-origin.${var.domain_name}"
   type    = "CNAME"
