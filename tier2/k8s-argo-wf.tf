@@ -7,6 +7,9 @@ resource "kubernetes_namespace" "argo_wf" {
 }
 
 resource "helm_release" "argo_wf" {
+  depends_on = [
+    kubernetes_cluster_role_binding.user_default_login
+  ]
   name = "argo-wf"
 
   repository = "https://argoproj.github.io/argo-helm"
@@ -50,4 +53,47 @@ EOF
   ]
 }
 
+
+resource "kubernetes_service_account" "user_default_login" {
+  metadata {
+    name      = "user-default-login"
+    namespace = kubernetes_namespace.argo_wf.metadata[0].name
+
+    annotations = {
+      "workflows.argoproj.io/rbac-rule" = "true"
+
+      "workflows.argoproj.io/rbac-rule-precedence" = "0"
+    }
+  }
+}
+
+resource "kubernetes_cluster_role" "user_default_login" {
+  metadata {
+    name = kubernetes_service_account.user_default_login.metadata[0].name
+  }
+
+  rule {
+    verbs      = ["*"]
+    api_groups = ["", "*"]
+    resources  = ["*"]
+  }
+}
+
+resource "kubernetes_cluster_role_binding" "user_default_login" {
+  metadata {
+    name = kubernetes_service_account.user_default_login.metadata[0].name
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.user_default_login.metadata[0].name
+    namespace = kubernetes_namespace.argo_wf.metadata[0].name
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = kubernetes_cluster_role.user_default_login.metadata[0].name
+  }
+}
 
