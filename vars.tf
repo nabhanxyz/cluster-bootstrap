@@ -26,3 +26,23 @@ variable "bootstrap_username" {
 variable "enable_gitea" {
   type = string
 }
+
+variable "s3_access_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "s3_secret_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "s3_bucket" {
+  type      = string
+  sensitive = true
+}
+
+variable "s3_host" {
+  type      = string
+  sensitive = true
+}
