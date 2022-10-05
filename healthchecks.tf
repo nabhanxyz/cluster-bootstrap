@@ -11,7 +11,9 @@ resource "helm_release" "healthchecks" {
   namespace  = kubernetes_namespace.healthchecks.metadata[0].name
   repository = "https://k8s-at-home.com/charts/"
   chart      = "healthchecks"
-
+  depends_on = [
+    helm_release.longhorn
+  ]
 
   set {
     name  = "persistence.config.enabled"
