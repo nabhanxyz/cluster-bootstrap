@@ -64,17 +64,17 @@ dex:
           name: argo-workflows-sso
           key: client-secret
 server:
-  # ingress:
-  #   enabled: true
-  #   ingressClassName: nginx
-  #   annotations:
-  #     external-dns.alpha.kubernetes.io/target: tunnel-origin.${var.domain_name}
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      external-dns.alpha.kubernetes.io/target: tunnel-origin.${var.domain_name}
   #   #   kubernetes.io/ingress.class: nginx
   #   #   # kubernetes.io/tls-acme: "true"
   #   #   # cert-manager.io/cluster-issuer: letsencrypt-prod
   # #   # certManager: true
-  #   hosts:
-  #     - argocd.${var.domain_name}
+    hosts:
+      - argocd.${var.domain_name}
   config:
     url: https://argocd.${var.domain_name}
     dex.config: |
@@ -111,52 +111,52 @@ EOF
 }
 
 
-resource "cloudflare_record" "argocd" {
-  zone_id = data.cloudflare_zone.zone_id.id
-  name    = "argocd.${var.domain_name}"
-  value   = "tunnel-origin.${var.domain_name}"
-  type    = "CNAME"
-  proxied = true
-}
+# resource "cloudflare_record" "argocd" {
+#   zone_id = data.cloudflare_zone.zone_id.id
+#   name    = "argocd.${var.domain_name}"
+#   value   = "tunnel-origin.${var.domain_name}"
+#   type    = "CNAME"
+#   proxied = true
+# }
 
-resource "kubernetes_ingress_v1" "argocd" {
-  metadata {
-    name      = "argocd"
-    namespace = "argocd"
-    annotations = {
-      # "ingress.kubernetes.io/rewrite-target" = "/"
-      # "kubernetes.io/ingress.class" = "nginx"
-      "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
-      "nginx.ingress.kubernetes.io/backend-protocol"   = "HTTPS"
-    }
-  }
-  spec {
-    default_backend {
-      service {
-        name = "argo-cd-argocd-server"
-        port {
-          number = 80
-        }
-      }
-    }
-    ingress_class_name = "nginx"
+# resource "kubernetes_ingress_v1" "argocd" {
+#   metadata {
+#     name      = "argocd"
+#     namespace = "argocd"
+#     annotations = {
+#       # "ingress.kubernetes.io/rewrite-target" = "/"
+#       # "kubernetes.io/ingress.class" = "nginx"
+#       "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
+#       "nginx.ingress.kubernetes.io/backend-protocol"   = "HTTPS"
+#     }
+#   }
+#   spec {
+#     default_backend {
+#       service {
+#         name = "argo-cd-argocd-server"
+#         port {
+#           number = 80
+#         }
+#       }
+#     }
+#     ingress_class_name = "nginx"
 
-    rule {
-      host = "argocd.${var.domain_name}"
-      http {
-        path {
-          backend {
-            service {
-              name = "argo-cd-argocd-server"
-              port {
-                number = 443
-              }
-            }
-          }
+#     rule {
+#       host = "argocd.${var.domain_name}"
+#       http {
+#         path {
+#           backend {
+#             service {
+#               name = "argo-cd-argocd-server"
+#               port {
+#                 number = 443
+#               }
+#             }
+#           }
 
-          path = "/(.*)"
-        }
-      }
-    }
-  }
-}
+#           path = "/(.*)"
+#         }
+#       }
+#     }
+#   }
+# }

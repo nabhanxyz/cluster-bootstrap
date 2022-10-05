@@ -36,20 +36,20 @@ resource "kubernetes_ingress_v1" "longhorn_ingress" {
     namespace = kubernetes_namespace.longhorn_system.metadata[0].name
 
     annotations = {
-      "nginx.ingress.kubernetes.io/auth-realm" = "Authentication Required "
-      "nginx.ingress.kubernetes.io/auth-secret" = "basic-auth"
-      "nginx.ingress.kubernetes.io/auth-type" = "basic"
+      "nginx.ingress.kubernetes.io/auth-realm"      = "Authentication Required "
+      "nginx.ingress.kubernetes.io/auth-secret"     = "basic-auth"
+      "nginx.ingress.kubernetes.io/auth-type"       = "basic"
       "nginx.ingress.kubernetes.io/proxy-body-size" = "10000m"
-    #   "nginx.ingress.kubernetes.io/ssl-redirect" = "false"
+      #   "nginx.ingress.kubernetes.io/ssl-redirect" = "false"
       "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
-    #   "nginx.ingress.kubernetes.io/backend-protocol"   = "HTTP"
+      #   "nginx.ingress.kubernetes.io/backend-protocol"   = "HTTP"
     }
   }
 
   spec {
     ingress_class_name = "nginx"
     rule {
-    host = "longhorn.${var.domain_name}"
+      host = "longhorn.${var.domain_name}"
       http {
         path {
           path      = "/"
@@ -77,7 +77,7 @@ resource "kubernetes_secret" "longhorn_basic_auth" {
   }
 
   data = {
-    auth      = <<EOF
+    auth = <<EOF
 ${var.bootstrap_username}:${bcrypt(random_password.bootstrap_password.result)}
 EOF
   }
@@ -92,9 +92,9 @@ resource "kubernetes_secret" "longhorn_backup_target_secret" {
   }
 
   data = {
-    AWS_ACCESS_KEY_ID = var.s3_access_key
+    AWS_ACCESS_KEY_ID     = var.s3_access_key
     AWS_SECRET_ACCESS_KEY = var.s3_secret_key
-    AWS_ENDPOINTS = "https://${var.s3_host}"   
+    AWS_ENDPOINTS         = "https://${var.s3_host}"
   }
 
   type = "Opaque"
