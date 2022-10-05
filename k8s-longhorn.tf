@@ -22,13 +22,13 @@ resource "helm_release" "longhorn" {
   }
 }
 
-resource "cloudflare_record" "longhorn" {
-  zone_id = data.cloudflare_zone.zone_id.id
-  name    = "longhorn.${var.domain_name}"
-  value   = "tunnel-origin.${var.domain_name}"
-  type    = "CNAME"
-  proxied = true
-}
+# resource "cloudflare_record" "longhorn" {
+#   zone_id = data.cloudflare_zone.zone_id.id
+#   name    = "longhorn.${var.domain_name}"
+#   value   = "tunnel-origin.${var.domain_name}"
+#   type    = "CNAME"
+#   proxied = true
+# }
 
 resource "kubernetes_ingress_v1" "longhorn_ingress" {
   metadata {
@@ -43,6 +43,7 @@ resource "kubernetes_ingress_v1" "longhorn_ingress" {
       #   "nginx.ingress.kubernetes.io/ssl-redirect" = "false"
       "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
       #   "nginx.ingress.kubernetes.io/backend-protocol"   = "HTTP"
+      "external-dns.alpha.kubernetes.io/target" = "tunnel-origin.${var.domain_name}"
     }
   }
 
