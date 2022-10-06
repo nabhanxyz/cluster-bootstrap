@@ -36,9 +36,9 @@ resource "kubernetes_ingress_v1" "longhorn_ingress" {
     namespace = kubernetes_namespace.longhorn_system.metadata[0].name
 
     annotations = {
-      "nginx.ingress.kubernetes.io/auth-realm"      = "Authentication Required "
-      "nginx.ingress.kubernetes.io/auth-secret"     = "basic-auth"
-      "nginx.ingress.kubernetes.io/auth-type"       = "basic"
+      # "nginx.ingress.kubernetes.io/auth-realm"      = "Authentication Required "
+      # "nginx.ingress.kubernetes.io/auth-secret"     = "basic-auth"
+      # "nginx.ingress.kubernetes.io/auth-type"       = "basic"
       "nginx.ingress.kubernetes.io/proxy-body-size" = "10000m"
       #   "nginx.ingress.kubernetes.io/ssl-redirect" = "false"
       "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
@@ -71,20 +71,20 @@ resource "kubernetes_ingress_v1" "longhorn_ingress" {
   }
 }
 
-resource "kubernetes_secret" "longhorn_basic_auth" {
-  metadata {
-    name      = "basic-auth"
-    namespace = kubernetes_namespace.longhorn_system.metadata[0].name
-  }
+# resource "kubernetes_secret" "longhorn_basic_auth" {
+#   metadata {
+#     name      = "basic-auth"
+#     namespace = kubernetes_namespace.longhorn_system.metadata[0].name
+#   }
 
-  data = {
-    auth = <<EOF
-${var.bootstrap_username}:${bcrypt(random_password.bootstrap_password.result)}
-EOF
-  }
+#   data = {
+#     auth = <<EOF
+# ${var.bootstrap_username}:${bcrypt(random_password.bootstrap_password.result)}
+# EOF
+#   }
 
-  type = "Opaque"
-}
+#   type = "Opaque"
+# }
 
 resource "kubernetes_secret" "longhorn_backup_target_secret" {
   metadata {

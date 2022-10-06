@@ -26,3 +26,9 @@ variable "bootstrap_username" {
 variable "enable_gitea" {
   type = string
 }
+
+
+variable "cloudflare_team_name" {
+  type      = string
+  sensitive = true
+}
