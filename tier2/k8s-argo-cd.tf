@@ -69,10 +69,12 @@ server:
     ingressClassName: nginx
     annotations:
       external-dns.alpha.kubernetes.io/target: tunnel-origin.${var.domain_name}
-  #   #   kubernetes.io/ingress.class: nginx
-  #   #   # kubernetes.io/tls-acme: "true"
-  #   #   # cert-manager.io/cluster-issuer: letsencrypt-prod
-  # #   # certManager: true
+      # kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      certManager: true
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     hosts:
       - argocd.${var.domain_name}
   config:

@@ -65,6 +65,22 @@ resource "kubernetes_service_account" "user_default_login" {
       "workflows.argoproj.io/rbac-rule-precedence" = "0"
     }
   }
+  # automount_service_account_token = true
+  secret {
+    name = "user-default-login"
+  }
+}
+
+resource "kubernetes_secret_v1" "example" {
+  metadata {
+    name      = "user-default-login"
+    namespace = kubernetes_namespace.argo_wf.metadata[0].name
+    annotations = {
+      "kubernetes.io/service-account.name" = "user-default-login"
+    }
+  }
+
+  type = "kubernetes.io/service-account-token"
 }
 
 resource "kubernetes_cluster_role" "user_default_login" {

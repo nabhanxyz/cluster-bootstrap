@@ -10,7 +10,7 @@ resource "helm_release" "authentik" {
   depends_on = [
     helm_release.cert_manager,
     helm_release.ingress_nginx,
-    helm_release.longhorn
+    # helm_release.longhorn
   ]
   name = "authentik"
 

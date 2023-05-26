@@ -137,27 +137,27 @@ resource "cloudflare_access_policy" "grafana" {
 
 ##longhorn
 
-resource "cloudflare_access_application" "longhorn" {
-  zone_id                   = data.cloudflare_zone.zone_id.id
-  name                      = "longhorn"
-  domain                    = "longhorn.${var.domain_name}"
-  type                      = "self_hosted"
-  session_duration          = "24h"
-  auto_redirect_to_identity = false
-}
+# resource "cloudflare_access_application" "longhorn" {
+#   zone_id                   = data.cloudflare_zone.zone_id.id
+#   name                      = "longhorn"
+#   domain                    = "longhorn.${var.domain_name}"
+#   type                      = "self_hosted"
+#   session_duration          = "24h"
+#   auto_redirect_to_identity = false
+# }
 
-resource "cloudflare_access_policy" "longhorn" {
-  application_id = cloudflare_access_application.longhorn.id
-  zone_id        = cloudflare_access_application.longhorn.zone_id
-  name           = "longhorn policy"
-  precedence     = "1"
-  decision       = "allow"
+# resource "cloudflare_access_policy" "longhorn" {
+#   application_id = cloudflare_access_application.longhorn.id
+#   zone_id        = cloudflare_access_application.longhorn.zone_id
+#   name           = "longhorn policy"
+#   precedence     = "1"
+#   decision       = "allow"
 
-  include {
-    email = ["${var.contact_email}"]
-  }
+#   include {
+#     email = ["${var.contact_email}"]
+#   }
 
-  require {
-    email = ["${var.contact_email}"]
-  }
-}
+#   require {
+#     email = ["${var.contact_email}"]
+#   }
+# }

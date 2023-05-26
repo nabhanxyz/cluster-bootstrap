@@ -12,7 +12,7 @@ resource "helm_release" "healthchecks" {
   repository = "https://k8s-at-home.com/charts/"
   chart      = "healthchecks"
   depends_on = [
-    helm_release.longhorn
+    # helm_release.longhorn
   ]
 
   set {
